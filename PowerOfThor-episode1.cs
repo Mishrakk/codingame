@@ -33,35 +33,23 @@ class Player
             // A single line providing the move to be made: N NE E SE S SW W or NW
             int differenceX = initialTX - lightX;
             int differenceY = initialTY - lightY;
-            if (differenceX < 0 && differenceY < 0) {
-                Console.WriteLine("SE");
-                initialTY++;
-                initialTX++;
-            } else if (differenceX < 0 && differenceY > 0) {
-                Console.WriteLine("NE");
+            string movementY = "";
+            string movementX = "";
+            if (differenceY > 0){
                 initialTY--;
-                initialTX++;
-            } else if (differenceX > 0 && differenceY < 0) {
-                Console.WriteLine("SW");
-                initialTY++;
-                initialTX--;
-            } else if (differenceX > 0 && differenceY > 0) {
-                Console.WriteLine("NW");
-                initialTY--;
-                initialTX--;
-            } else if (differenceX < 0 ){
-                Console.WriteLine("E");
-                initialTX++;
-            } else if (differenceX > 0) {
-                Console.WriteLine("W");
-                initialTX--;
-            } else if (differenceY > 0) {
-                Console.WriteLine("N");
-                initialTY--;
+                movementY = "N";
             } else if (differenceY < 0) {
-                Console.WriteLine("S");
                 initialTY++;
+                movementY = "S";
             }
+            if (differenceX > 0) {
+                initialTX--;
+                movementX = "W";
+            } else if (differenceX < 0){
+                initialTX++;
+                movementX ="E";
+            }
+            Console.WriteLine(movementY + movementX);
         }
     }
 }
