@@ -7,12 +7,8 @@
 #include <sstream>
 using namespace std;
 
-int IMAX=numeric_limits<int>::max();
-/**
- * Auto-generated code below aims at helping you parse
- * the standard input according to the problem statement.
- **/
- struct vertex{
+const int IMAX=numeric_limits<int>::max();
+struct vertex {
      int name;
      vector<int> adj;
      int dist;
@@ -21,18 +17,17 @@ int IMAX=numeric_limits<int>::max();
      bool visited;
      vertex(int s){name=s;}
      vertex(int s,int x){name=s; adj.push_back(x);}
- };
- 
+};
 
 map<int, vertex *> graf;
 vector<int> gateways; 
-void dodajKrawedz(int N1, int N2)
-{//cerr<<"N1 "<<N1<<" N2 "<<N2<<endl;
-if(graf.find(N1)==graf.end())graf[N1]=new vertex(N1,N2);
-else graf[N1]->adj.push_back(N2);
 
-if(graf.find(N2)==graf.end()) graf[N2]=new vertex(N2,N1);
-else graf[N2]->adj.push_back(N1);
+void dodajKrawedz(int N1, int N2){//cerr<<"N1 "<<N1<<" N2 "<<N2<<endl;
+    if(graf.find(N1)==graf.end())graf[N1]=new vertex(N1,N2);
+    else graf[N1]->adj.push_back(N2);
+
+    if(graf.find(N2)==graf.end()) graf[N2]=new vertex(N2,N1);
+    else graf[N2]->adj.push_back(N1);
 }
 
 void usunKrawedz(int N1,int N2)
@@ -84,19 +79,10 @@ void sciezka(int source, int target,vector<pair<int,int>>& sciezka)
     int i=0;
     while(1)
     {
-    //cerr<<graf[obecny]->name<<" "<<graf[obecny]->parent<<endl;
-    //cerr<<"wkladam:"<<graf[obecny]->name<<" "<<graf[obecny]->adj.size()<<endl;
-    sciezka.push_back(make_pair(graf[obecny]->name,graf[obecny]->adj.size()));
-    if(graf[obecny]->parent==IMAX) {break;}
-    else {obecny=graf[obecny]->parent;}
+        sciezka.push_back(make_pair(graf[obecny]->name,graf[obecny]->adj.size()));
+        if(graf[obecny]->parent==IMAX) {break;}
+        else {obecny=graf[obecny]->parent;}
     }
-    /*do
-    {
-    sciezka.push_back(make_pair(graf[obecny]->name,graf[obecny]->adj.size()));
-    obecny=graf[obecny]->parent;
-    }while(graf[obecny]->parent=!IMAX);
-    sciezka.push_back(make_pair(graf[source]->name,graf[source]->adj.size()));
-    */
 }
 
 int main()
@@ -111,24 +97,13 @@ int main()
         cin >> N1 >> N2; cin.ignore();
         dodajKrawedz(N1,N2);
     }
-    //wyglad
-    //cerr<<"N="<<N<<endl;
-    /*for (int i=0;i<N;i++)
-    {cerr<<"ver="<<i<<" sasiedzi:";
-    for (int j=0;j<graf[i]->adj.size();j++) cerr<<" "<<graf[i]->adj[j];
-    cerr<<endl;
-    }*/
-    
-    
+
     for (int i = 0; i < E; i++) {
         int EI; // the index of a gateway node
         cin >> EI; cin.ignore();
         gateways.push_back(EI);
-        //cerr<<"gate:"<<EI<<endl;
     }
-//cerr<<"vertext="<<graf[2]->name<<"odl="<<graf[2]->dist<<endl;
 
-    // game loop
     while (1) {
         int SI; // The index of the node on which the Skynet agent is positioned this turn
         cin >> SI; cin.ignore();
@@ -176,9 +151,6 @@ int main()
         }
         cerr<<distA<<" "<<przerwij;
         usunKrawedz(u1,u2);
-        // Write an action using cout. DON'T FORGET THE "<< endl"
-        // To debug: cerr << "Debug messages..." << endl;
         cout<<przerwij<<endl;
-        //cout << "0 1" << endl; // Example: 0 1 are the indices of the nodes you wish to sever the link between
     }
 }
